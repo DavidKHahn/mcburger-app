@@ -4,10 +4,15 @@ export type Burger = {
   price: number;
   image: string;
   description: string;
-  calories?: number;
+  calorie?: number;
+};
+
+export type CartItem = Burger & {
+  quantity: number;
 };
 
 export type RootStackParamList = {
   Home: undefined;
   Details: { item: Burger };
+  Cart: undefined;
 };
