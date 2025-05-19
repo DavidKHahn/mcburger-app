@@ -21,7 +21,11 @@ export default function App() {
             component={HomeScreen}
             options={{ title: "Home", headerRight: () => <CartIcon /> }}
           />
-          <Stack.Screen name="Details" component={DetailScreen} />
+          <Stack.Screen
+            name="Details"
+            component={DetailScreen}
+            options={{ title: "Product Details" }}
+          />
           <Stack.Screen name="Cart" component={CartScreen} />
         </Stack.Navigator>
       </NavigationContainer>
