@@ -1,25 +1,31 @@
 import React from "react";
-import { TouchableOpacity, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import HomeScreen from "./screens/HomeScreen";
 import DetailScreen from "./screens/DetailScreen";
-import CartIcon from "./components/CartIcon";
 import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/LoginScreen";
+import HeaderRightIcons from "./components/HeaderRightIcons";
+
 import { RootStackParamList } from "./types";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export default function App() {
+const RootNavigator = () => {
+  const { isAuthenticated } = useAuth();
+  console.log("Auth State:", isAuthenticated);
+
   return (
-    <CartProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      {isAuthenticated ? (
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ title: "Home", headerRight: () => <CartIcon /> }}
+            options={{ title: "Home", headerRight: () => <HeaderRightIcons /> }}
           />
           <Stack.Screen
             name="Details"
@@ -28,7 +34,19 @@ export default function App() {
           />
           <Stack.Screen name="Cart" component={CartScreen} />
         </Stack.Navigator>
-      </NavigationContainer>
-    </CartProvider>
+      ) : (
+        <LoginScreen />
+      )}
+    </NavigationContainer>
+  );
+};
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <RootNavigator />
+      </CartProvider>
+    </AuthProvider>
   );
 }

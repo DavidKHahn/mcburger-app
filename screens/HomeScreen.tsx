@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   useColorScheme,
+  Button,
 } from "react-native";
 import { Burger } from "../types";
 import BurgerItem from "../components/BurgerItem";
